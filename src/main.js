@@ -27,6 +27,7 @@ Vue.use(PouchVue, {
 	defaultDB: "http://SuperAdmin:xS6-Vuy-hmR-9LB@localhost:5984/personal-dashboard",
 	optionDB: {}
 });
+/* http://127.0.0.1:5984/_utils/#_config/couchdb@localhost */
 
 new Vue({
 	render: h => h(App)

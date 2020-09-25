@@ -1,10 +1,22 @@
 export let account = [
-	{institution: 'TD', accounts: ['chequing', 'savings']},
-	{institution: 'Scotiabank', accounts: ['chequing', 'savings']}];
+    {
+      "institution": "TD",
+      "accounts": [
+        "chequing",
+        "savings"
+      ]
+    },
+    {
+      "institution": "Scotiabank",
+      "accounts": [
+        "chequing",
+        "savings"
+      ];
 
 export let expenseCategories = [
-	{category: 'food', subcategories: ['coffee', 'lunch']},
-	{category: 'home', subcategories: ['cleaning supplies', 'kitchen stuff']}]
+	{category: "food", subcategories: ["coffee", "lunch", "dinner", "take-out", "snack"]},
+	{category: "home", subcategories: ["groceries", "cleaning supplies", "kitchen stuff", "first aid"]},
+  {category: "miscellaneous", subcategories: ["miscellaneous"]}]
 
 export class DailyExpenseRow {
 	constructor (cost, category, comment) {
@@ -64,3 +76,13 @@ console.log(result);
 
 
 
+/*
+  "expense": {
+    "cost": "159.12",
+    "category": "shopping: clothing",
+    "comment": "Boxing Day",
+    "account": "TD: chequing",
+    "displayDate": "MON 20:48",
+    "rawJavascriptDate": "2020-01-22T00:48:29.572Z"
+  }
+*/

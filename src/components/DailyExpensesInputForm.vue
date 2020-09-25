@@ -7,7 +7,7 @@
 			v-if="show">
 				<b-form-row>
 					<b-col cols="3">
-						<h4 id="clock">{{date}} {{day}} {{time}}</h4> <p></p>
+						<h4 id="clock">Enter expenses for {{date}} {{day}} {{time}}</h4> <p></p>
 						<b-button type="submit" variant="primary">Submit</b-button>
 						<p></p>
 				    	<b-button type="reset" variant="danger">Reset</b-button>
@@ -37,7 +37,7 @@
 					          required
 					          v-model="form.comment"
 					          type="text"
-					          placeholder="eg. 'Impulse shopping on boxing day'"
+					          placeholder="Comment eg. 'Impulse shopping on boxing day'"
 					          class="mx-auto"
 					        ></b-form-input>
 					    </b-input-group-append>	<p></p>
@@ -67,10 +67,10 @@
 					cost: '',
 					category: null,
 					comment: '',
-					account: null
+					account: null,
+					displayDate: ''
 				},
 				hiddenForm: {
-					displayDate: '',
 					rawJavascriptDate: ''
 				},
 				show: true,
@@ -100,43 +100,44 @@
 			updateTime() {
 			    var cd = new Date();
 
-			    this.hiddenForm.rawJavascriptDate = cd;
+			    this.form.rawJavascriptDate = cd;
 			    this.hiddenForm.displayDate = this.day + ' ' + this.time;
 
-			    this.date = this.month[cd.getMonth() - 1] + ' ' + cd.getDate() + ', ' + this.zeroPadding(cd.getFullYear(), 4);
+			    this.date = this.month[cd.getMonth()] + ' ' + cd.getDate() + ', ' + this.zeroPadding(cd.getFullYear(), 4);
 			    this.day =  ' ' + this.week[cd.getDay()];
 			    this.time = this.zeroPadding(cd.getHours(), 2) + ':' + this.zeroPadding(cd.getMinutes(), 2);
 			},
 			onSubmit(evt) {
-				evt.preventDefault()
-				var f = {...this.form, ...this.hiddenForm}
-				console.log(JSON.stringify(f))
-
+				evt.preventDefault();
+				var f = {...this.form, ...this.hiddenForm};
+				var self = this;
 				this.$pouch.post({
 					expense: f
 				}).then(function(response){
-					console.log(response)
+					console.log(response);
+
+					/* Signal DailyExpensesTable component of new transaction */
+					self.$emit('doRefreshExpenseTable');
+					self.onReset(evt);
 				}).catch(function(err){
 					console.log("Database post request error");
 					console.log(err);
-				})
-
-				this.onReset(evt)
-			},
+				});
+			},	
 			onReset(evt) {
 				evt.preventDefault()
 				// Reset our form values
-				this.form.cost = ''
-				this.form.category = null
-				this.form.comment = ''
-				this.form.time = null
-				this.form.account = null
+				this.form.cost = '';
+				this.form.category = null;
+				this.form.comment = '';
+				this.form.time = null;
+				this.form.account = null;
 
 				// Trick to reset/clear native browser form validation state
-				this.show = false
+				this.show = false;
 				this.$nextTick(() => {
-				  this.show = true
-				})
+				  this.show = true;
+				});
 			}
 		},
 		mounted() {
@@ -158,9 +159,9 @@
 			flatAccountsData.push(this.accountTypes[0]);
 			this.accountTypes = flatAccountsData;
 
-			/* clock */
+			/* initialize clock */
 			this.updateTime();
-			var timerID = setInterval(this.updateTime(), 1000);
+			var timerID = setInterval(this.updateTime(), 2000);
 
 			/* get expense categories */
 			var flatExpCategoriesData = new Array(0);

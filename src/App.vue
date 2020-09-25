@@ -8,11 +8,14 @@
 		<hr class="my-3">
 		<p>Learn about personal spending habits.</p>
 	</b-jumbotron>
-		<DailyExpensesTable></DailyExpensesTable>
+		<DailyExpensesTable
+			v-bind:doRefreshExpenseTable="doRefreshExpenseTable"
+			v-on:isExpenseInputFormSubmitted="doRefreshExpenseTable=false"></DailyExpensesTable>
 		<p></p>
 		<DailyExpensesInputForm 
 			v-bind:expenseCategoriesTableId="expenseCategoriesTableId"
-			v-bind:accountTypesTableId="accountTypesTableId">	
+			v-bind:accountTypesTableId="accountTypesTableId"
+			v-on:doRefreshExpenseTable="doRefreshExpenseTable=true">
 			</DailyExpensesInputForm>
 	</div>
 </template>
@@ -31,8 +34,18 @@
 			return {
 				dbAdminUserId: "SuperAdmin",
 				dbAdminPassword: "xS6-Vuy-hmR-9LB",
-				accountTypesTableId: "38b00fc0484d4d3f92a3b75324002496",
-				expenseCategoriesTableId: "38b00fc0484d4d3f92a3b75324009711"
+				/* PC localhost DB instance */
+				// accountTypesTableId: "38b00fc0484d4d3f92a3b75324002496",
+				// expenseCategoriesTableId: "38b00fc0484d4d3f92a3b75324009711",
+				
+				/* laptop localhost DB instance */
+				accountTypesTableId: "8fbc4e2fae13ae4f1791061263000660",
+				expenseCategoriesTableId: "8fbc4e2fae13ae4f1791061263001fad",
+				doRefreshExpenseTable: false
+			}
+		},
+		watch: {
+			doRefreshExpenseTable: function(newVal, oldVal) {
 			}
 		}
 	};

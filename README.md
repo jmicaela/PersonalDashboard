@@ -25,5 +25,11 @@ npm run lint
 See [Configuration Reference](https://cli.vuejs.org/config/).
 =======
 # PersonalDashboard
-Personally built dashboard
->>>>>>> 92435bf46626b6837f7a06f93e7ada6f01211e2d
+TO DO 
+>>>>>>> Add form input validation
+>>>>>>> Add custom sort button on date column
+>>>>>>> Add row divider per change of day
+>>>>>>> Add analytics UI
+>>>>>>> Add custom category input
+>>>>>>> Add authentication and Security
+>>>>>>> Cloud Deployment
